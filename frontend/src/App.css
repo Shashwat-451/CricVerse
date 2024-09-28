@@ -1,0 +1,14 @@
+/* write your css here */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.auth{
+    margin: 0px auto;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow:0px 8px 16px 0px rgba(0, 0, 0, 2.2);;
+}
