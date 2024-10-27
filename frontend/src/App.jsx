@@ -15,7 +15,7 @@ import Chat from "./pages/Chat"
 import Error from "./pages/Error"
 import SignupForm from "./pages/SignUp"
 import PlayerStats from "./pages/PlayerStats"
-
+import Navbar from "./components/Navbar"
 
 
 //Notes: Open Route is for pages, that has to be visible when user is not logged in, but invisible when user is logged in
@@ -37,23 +37,21 @@ function App() {
   }, [])
 
   return (
-    <div className="flex min-h-screen w-screen flex-col font-inter theme-bg">
-      {/* <Navbar /> */}
+    <div className="flex min-h-screen flex-col font-inter theme-bg ">
+<Navbar />
       <Routes>
+      
         <Route path="/" element={<Home />} />
-        {/* <Route path="/livescores" element={<LiveScores/>} /> */}
-        {/* <Route path="/news" element={<News/>}/>
+        <Route path="/livescores" element={<LiveScores/>} />
         <Route path="/rankings" element={<Rankings/>} />
         <Route path="/schedules" element={<Schedules/>} />
         <Route path="/teams" element={<Teams/>} />
         <Route path="/login"element={<Login />}/>
-        <Route path="/player/:playerId"element={<PlayerStats/>}/> */}
-        {/* <Route path="/signup"element={<OpenRoute><SignupForm /></OpenRoute>}/> */}
-        {/* <Route path="/signup"element={<SignupForm />}/> */}
-        <Route path="/chat"element={<PrivateRoute><Chat /></PrivateRoute>}/>
-        {/* <Route path="forgot-password" element={ <OpenRoute><ForgotPassword /></OpenRoute>}/> */}
+        <Route path="/player/:playerId/:imageId"element={<PlayerStats/>}/> 
+        <Route path="/chat"element={<Chat />}/>
         <Route path="*" element={<Error/>} />
       </Routes>
+      
     </div>
   )
 }

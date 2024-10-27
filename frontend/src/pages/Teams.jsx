@@ -1,82 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import TeamsTitle from '../components/TeamsTitle';
-import { apiConnector } from "../services/apiConnector"
-import { players } from '../services/apis';
-import axios from 'axios';
+import { apiConnector } from "../services/apiConnector";
 import ProfileCard from '../components/ProfileCard';
+import { APIs } from '../services/apis';
+import india from "../assets/images/india.png";
+import afg from "../assets/images/afg.png";
+import aus from "../assets/images/aus.png";
+import bangladesh from "../assets/images/bangladesh.png";
+import eng from "../assets/images/eng.png";
+import ireland from "../assets/images/ireland.png";
+import nz from "../assets/images/nz.png";
+import pak from "../assets/images/pak.png";
+import sa from "../assets/images/sa.png";
+import sri from "../assets/images/sri.png";
+import wi from "../assets/images/wi.png";
+import zimbabwe from "../assets/images/zimbabwe.png";
 
 const Teams = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [data, setData] = useState([]);
     const [teamId, setTeam] = useState(2);
+    const [teamName, setTeamName] = useState('India');
 
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
+    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
+    const handleClick = (team, teamName) => {
+        setTeam(team); 
+        setTeamName(teamName);
     };
-
-    const handleClick = (team) => {
-        setTeam(team); // Use the `team` argument instead of `teamId`
-         // Pass the correct `teamId` when fetching players
-    };
-
-    //   const fetchPlayers = async (teamId) => {
-    //     try {
-    //       const response = await apiConnector(
-    //         "GET",
-    //         `${players.GET_PLAYERS}${teamId}/players`,
-    //         null,
-    //         {
-    //           "x-rapidapi-key": process.env.REACT_APP_API_KEY,
-    //           "x-rapidapi-host": process.env.REACT_APP_API_HOST,
-    //         }
-    //       );
-    //       setData(response.data);
-    //       console.log(response.data); // Log `response.data` directly here
-    //     } catch (error) {
-    //       console.error(error); // Handle the error properly
-    //     }
-    //   };
 
     const fetchPlayers = async () => {
         try {
-            const res = await axios.get(`${players.GET_PLAYERS}${teamId}/players`, {
-                headers: {
-                    "x-rapidapi-key": "9ca0dcc9b9mshe5bdedc87ae384dp1bdd7djsnbc6c1aeced4f",
-                    "x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com"
-                },
-            });
-            setData(res.data.player);  // Set the data in the state
-            // Log the response data directly
-            console.log(data);
+            const res = await apiConnector("POST", APIs.teams, { teamId });
+            setData(res.data.data.player);
         } catch (error) {
-            console.error(error);  // Handle and log errors
+            console.error(error);
         }
     };
 
     useEffect(() => {
-        fetchPlayers(teamId)
-    }, [teamId])
-    console.log(data);
+        fetchPlayers();
+    }, [teamId]);
 
     return (
         <>
             <Navbar />
-            {/* Toggle button */}
             <button
                 onClick={toggleSidebar}
                 aria-controls="default-sidebar"
                 type="button"
-                className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                className="p-2 mt-2 ms-3 text-gray-500 rounded-lg sm:hidden hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-600"
             >
-                <span className="sr-only">Open sidebar</span>
-                <svg
-                    className="w-6 h-6"
-                    aria-hidden="true"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                     <path
                         clipRule="evenodd"
                         fillRule="evenodd"
@@ -87,63 +63,28 @@ const Teams = () => {
 
             {/* Sidebar */}
             <aside
-                id="default-sidebar"
-                className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-                    } sm:translate-x-0`}
+                className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} sm:translate-x-0 bg-gradient-to-b from-gray-900 to-gray-800 shadow-lg`}
                 aria-label="Sidebar"
             >
-                <div className="h-full mt-16 px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-                    
-                    <ul className="space-y-2 font-medium">
-                        <div onClick={() => handleClick(2)}>
-                            <TeamsTitle title="India" />
-                        </div>
-                        <div onClick={() => handleClick(4)}>
-                            <TeamsTitle title="Australia" />
-                        </div>
-                        <div onClick={() => handleClick(9)}>
-                            <TeamsTitle title="England" />
-                        </div>
-                        <div onClick={() => handleClick(11)}>
-                            <TeamsTitle title="South Africa" />
-                        </div>
-                        <div onClick={() => handleClick(13)}>
-                            <TeamsTitle title="New Zealand" />
-                        </div>
-                        <div onClick={() => handleClick(3)}>
-                            <TeamsTitle title="Pakistan" />
-                        </div>
-                        <div onClick={() => handleClick(5)}>
-                            <TeamsTitle title="Sri Lanka" />
-                        </div>
-                        <div onClick={() => handleClick(6)}>
-                            <TeamsTitle title="Bangladesh" />
-                        </div>
-                        <div onClick={() => handleClick(10)}>
-                            <TeamsTitle title="West Indies" />
-                        </div>
-                        <div onClick={() => handleClick(96)}>
-                            <TeamsTitle title="Afghanistan" />
-                        </div>
-                        <div onClick={() => handleClick(27)}>
-                            <TeamsTitle title="Ireland" />
-                        </div>
-                        <div onClick={() => handleClick(12)}>
-                            <TeamsTitle title="Zimbabwe" />
-                        </div>
+                <div className="h-full mt-16 px-3 py-4 overflow-y-auto">
+                    <ul className="space-y-4 font-medium text-white">
+                        {[{teamId: 2, img: india, name: "India"}, {teamId: 4, img: aus, name: "Australia"}, {teamId: 9, img: eng, name: "England"}, {teamId: 11, img: sa, name: "South Africa"}, {teamId: 13, img: nz, name: "New Zealand"}, {teamId: 3, img: pak, name: "Pakistan"}, {teamId: 5, img: sri, name: "Sri Lanka"}, {teamId: 6, img: bangladesh, name: "Bangladesh"}, {teamId: 10, img: wi, name: "West Indies"}, {teamId: 96, img: afg, name: "Afghanistan"}, {teamId: 27, img: ireland, name: "Ireland"}, {teamId: 12, img: zimbabwe, name: "Zimbabwe"}].map((team) => (
+                            <li key={team.teamId} className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-700 transition cursor-pointer" onClick={() => handleClick(team.teamId, team.name)}>
+                                <img src={team.img} alt={team.name} className="w-10 h-10 " />
+                                <TeamsTitle title={team.name} />
+                            </li>
+                        ))}
                     </ul>
                 </div>
             </aside>
 
             {/* Main content */}
-            <div className="p-4 sm:ml-64 flex flex-wrap gap-5">
-                {data.map((player) => (
-                    player.id && <ProfileCard key={player.id} player={player} />  // Ensure each item has a unique `key`
+            <div className="mt-16 justify-center align-middle p-6 sm:ml-64 flex flex-wrap gap-6 bg-gradient-to-b from-gray-800 to-gray-900 min-h-screen text-gray-300">
+                {data.map((player) => player.id && (
+                    <ProfileCard key={player.id} player={player} team={teamName} />
                 ))}
             </div>
-
         </>
-
     );
 };
 

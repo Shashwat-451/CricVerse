@@ -2,67 +2,35 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import BattingStats from '../components/BattingStats';
 import BowlingStats from '../components/BowlingStats';
-import { players } from '../services/apis';
-import axios from 'axios';
+import { APIs } from '../services/apis';
+import { apiConnector } from '../services/apiConnector';
 import Navbar from '../components/Navbar';
 
-function PlayerStats(props) {
+function PlayerStats() {
   const [bowlingData, setBowlingData] = useState([]);
   const [battingData, setBattingData] = useState([]);
   const [bio, setBio] = useState({});
   const [showFullBio, setShowFullBio] = useState(false);
 
   const { playerId } = useParams();
+  const { imageId } = useParams();
 
-  const fetchBattingStats = async (playerId) => {
+  const fetchPlayerStats = async (playerId) => {
     try {
-      const res = await axios.get(`${players.GET_PLAYER_STATS}${playerId}/batting`, {
-        headers: {
-          'x-rapidapi-key': '9ca0dcc9b9mshe5bdedc87ae384dp1bdd7djsnbc6c1aeced4f',
-          'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com',
-        },
-      });
-      setBattingData(res.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const fetchBio = async (playerId) => {
-    try {
-      const res = await axios.get(`${players.GET_PLAYER_STATS}${playerId}`, {
-        headers: {
-          'x-rapidapi-key': '9ca0dcc9b9mshe5bdedc87ae384dp1bdd7djsnbc6c1aeced4f',
-          'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com',
-        },
-      });
-      setBio(res.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const fetchBowlingStats = async (playerId) => {
-    try {
-      const res = await axios.get(`${players.GET_PLAYER_STATS}${playerId}/bowling`, {
-        headers: {
-          'x-rapidapi-key': '9ca0dcc9b9mshe5bdedc87ae384dp1bdd7djsnbc6c1aeced4f',
-          'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com',
-        },
-      });
-      setBowlingData(res.data);
+      const res = await apiConnector("POST", APIs.playerStats, { playerId });
+      setBattingData(res.data.data.Batting);
+      setBowlingData(res.data.data.Bowling);
+      setBio(res.data.data.Bio);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    fetchBio(playerId);
-    fetchBattingStats(playerId);
-    fetchBowlingStats(playerId);
+    fetchPlayerStats(playerId);
   }, [playerId]);
 
-  const image = `http://i.cricketcb.com/stats/img/faceImages/${playerId}.jpg`;
+  const image = `https://static.cricbuzz.com/a/img/v1/75x75/i1/c${imageId}/i1.jpg`;
 
   // Function to truncate the bio to 200 words
   const truncatedBio = (bio.bio || '')
@@ -72,34 +40,32 @@ function PlayerStats(props) {
     .join(' ');
 
   return (
-    <div>
+    <div className="bg-gray-100 min-h-screen">
       <Navbar />
 
-      <div className="h-full bg-gray-200 p-8">
-        <div className="bg-white rounded-lg shadow-xl pb-8">
-          <div className="w-full h-[250px] bg-black"></div>
-          <div className="flex flex-col items-center -mt-20">
-            <img src={image} className="w-40 border-4 border-white rounded-full" alt="Profile" />
-            <div className="flex items-center space-x-2 mt-2">
-              <p className="text-2xl">{bio.name}</p>
-            </div>
-            <p className="text-gray-700">{bio.role}</p>
+      <div className="container mx-auto p-8 mt-12">
+        <div className="bg-white rounded-lg shadow-lg pb-8">
+          <div className="w-full h-[250px] bg-gradient-to-r from-indigo-600 to-indigo-500"></div>
+          <div className="flex flex-col items-center -mt-16">
+            <img src={image} className="w-28 border-4 border-white rounded-full shadow-lg" alt="Profile" />
+            <h1 className="text-2xl font-bold text-gray-800 mt-2">{bio.name}</h1>
+            <p className="text-gray-700 font-medium">{bio.role}</p>
             <p className="text-sm text-gray-500">{bio.intlTeam}</p>
           </div>
         </div>
 
-        <div className="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
-          <div className="flex flex-col w-full 2xl:w-3/3">
-            <div className="flex-1 bg-white rounded-lg shadow-xl p-8">
-              <h4 className="text-xl text-gray-900 font-bold">About</h4>
-              <p className="mt-2 text-gray-700">
+        <div className="my-6 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
+          <div className="flex flex-col w-full">
+            <div className="flex-1 bg-white rounded-lg shadow-lg p-8">
+              <h4 className="text-xl text-indigo-600 font-bold ml-2">About</h4>
+              <p className="mt-2 text-gray-700 ml-2">
                 {showFullBio ? (
-                  <p dangerouslySetInnerHTML={{ __html: bio.bio }} style={{ whiteSpace: 'pre-wrap' }} />
+                  <span dangerouslySetInnerHTML={{ __html: bio.bio }} style={{ whiteSpace: 'pre-wrap' }} />
                 ) : (
                   <span>
                     {truncatedBio}...
                     <button
-                      className="text-blue-500 ml-2 underline hover:text-blue-700"
+                      className="text-indigo-500 ml-2 underline hover:text-indigo-700"
                       onClick={() => setShowFullBio(true)}
                     >
                       Read More
@@ -109,7 +75,7 @@ function PlayerStats(props) {
               </p>
               {showFullBio && (
                 <button
-                  className="text-blue-500 underline hover:text-blue-700 mt-2"
+                  className="text-indigo-500 underline hover:text-indigo-700 mt-2"
                   onClick={() => setShowFullBio(false)}
                 >
                   Show Less
@@ -117,12 +83,12 @@ function PlayerStats(props) {
               )}
             </div>
 
-            <div className="flex-1 bg-white rounded-lg shadow-xl mt-4 p-8">
-              <h4 className="text-xl text-gray-900 font-bold">Batting Statistics</h4>
+            <div className="flex-1 bg-white rounded-lg shadow-lg mt-4 p-8">
+              <h4 className="text-xl ml-3 text-indigo-600 font-bold">Batting Statistics</h4>
               <BattingStats data={battingData} />
             </div>
-            <div className="flex-1 bg-white rounded-lg shadow-xl mt-4 p-8">
-              <h4 className="text-xl text-gray-900 font-bold">Bowling Statistics</h4>
+            <div className="flex-1 bg-white rounded-lg shadow-lg mt-4 p-8">
+              <h4 className="text-xl ml-3 text-indigo-600 font-bold">Bowling Statistics</h4>
               <BowlingStats data={bowlingData} />
             </div>
           </div>

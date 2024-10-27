@@ -1,11 +1,11 @@
-
+import TeamsServices from "../services/TeamsServices.js";
 
 class TeamsController{
    
     async getTeams(req,res){
         try{
-          const teamsId=req.body;
-          const response=await TeamsServices.getTeams(teamsId);
+          const {teamId}=req.body;
+          const response=await TeamsServices.getTeams(teamId);
           res.status(200).json({
             success:true,
             message:"Teams Data Fetched",
@@ -14,8 +14,13 @@ class TeamsController{
         }
         catch(error){
           console.log(error);
+          res.status(500).json({
+            success: false,
+            message: "An error occurred while fetching teams data",
+            error: error.message,
+          });
         }
     }
 }
 
-export default TeamsController;
+export default new TeamsController();

@@ -131,7 +131,7 @@ const Chat = () => {
     //   </div>
     // </div>
     <>
-     <div>
+     <div className='bg-gray-800'>
       <h1>Welcome to the Chat Application</h1>
       <ChatPage />
     </div>

@@ -12,3 +12,126 @@
     flex-direction: column;
     box-shadow:0px 8px 16px 0px rgba(0, 0, 0, 2.2);;
 }
+.background {
+    position: relative;
+    background-image: url('./assets/images/background.jpg'); /* Adjust the path as needed */
+    background-size: cover; /* Cover to ensure it covers the entire area */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    height: 100vh; /* Set the height to fill the viewport */
+    width: 100%; /* Full width */
+    opacity: 0.8;
+   
+}
+.overlay {
+    position: absolute; /* Position it relative to the parent */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3); /* Dark overlay with 50% opacity */
+    z-index: 1; /* Ensure overlay is above the background */
+}
+.headerFont {
+    font-size: 140px;
+  }
+  .headerPara{
+    font-size: 35px;
+  }
+  @media (max-width: 1200px) {
+    .headerFont {
+      font-size: 100px; /* Font size for screens smaller than 1200px */
+    }
+    .headerPara{
+        font-size: 28px;
+      }
+  }
+  
+  @media (max-width: 768px) {
+    .headerFont {
+      font-size: 72px; /* Font size for tablets */
+    }
+    .headerPara{
+        font-size: 20px;
+      }
+  }
+  
+  @media (max-width: 480px) {
+    .headerFont {
+      font-size: 56px; /* Font size for mobile screens */
+    }
+    .headerPara{
+        font-size: 10px;
+      }
+  }
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideInDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes bounceIn {
+    0%, 60%, 100% {
+      transform: translateY(0);
+    }
+    30% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  @keyframes floating {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+  
+  .animate-fadeInUp {
+    animation: fadeInUp 1.5s ease-out forwards;
+  }
+  
+  .animate-slideInDown {
+    animation: slideInDown 1.2s ease-out forwards;
+  }
+  
+  .animate-slideInUp {
+    animation: slideInUp 1.2s ease-out forwards;
+  }
+  
+  .animate-bounceIn {
+    animation: bounceIn 1.6s ease-out forwards;
+  }
+  
+  .animate-floating {
+    animation: floating 5s ease-in-out infinite;
+  }
+  
+  

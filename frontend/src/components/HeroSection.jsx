@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-
+import "../../src/App.css"
 const navigation = [
   { name: 'Product', href: '#' },
   { name: 'Features', href: '#' },
@@ -15,7 +15,7 @@ export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <div className="bg-white">
+    <div className="bg-white background">
       <header className="absolute inset-x-0 top-0 z-50">
         <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
           <div className="flex lg:flex-1">
@@ -28,7 +28,7 @@ export default function Example() {
               />
             </a>
           </div>
-          <div className="flex lg:hidden">
+          <div className="flex lg:hidden ">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
@@ -99,10 +99,10 @@ export default function Example() {
         </Dialog>
       </header>
 
-      <div className="relative isolate px-6 pt-14 lg:px-8">
+      <div className="relative isolate px-6 pt-14 lg:px-8 background overflow-hidden">
         <div
           aria-hidden="true"
-          className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+          className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80 "
         >
           <div
             style={{

@@ -14,7 +14,7 @@ const Sidebar = () => {
         onClick={toggleSidebar}
         aria-controls="default-sidebar"
         type="button"
-        className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 text-gray-400 hover:bg-gray-700 focus:ring-gray-600"
       >
         <span className="sr-only">Open sidebar</span>
         <svg
@@ -40,15 +40,15 @@ const Sidebar = () => {
         } sm:translate-x-0`}
         aria-label="Sidebar"
       >
-        <div className="h-full mt-16 px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+        <div className="h-full mt-16 px-3 py-4 overflow-y-auto bg-gray-50 bg-gray-800">
           <ul className="space-y-2 font-medium">
             <li>
               <a
                 href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-100 hover:bg-gray-700 group"
               >
                 <svg
-                  className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                  className="w-5 h-5 text-gray-500 transition duration-75 text-gray-400 group-hover:text-gray-900 group-hover:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -67,10 +67,10 @@ const Sidebar = () => {
 
       {/* Main content */}
       <div className="p-4 sm:ml-64">
-        <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+        <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg border-gray-700">
           <div className="grid grid-cols-3 gap-4 mb-4">
-            <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-              <p className="text-2xl text-gray-400 dark:text-gray-500">
+            <div className="flex items-center justify-center h-24 rounded bg-gray-50 bg-gray-800">
+              <p className="text-2xl text-gray-400 text-gray-500">
                 <svg
                   className="w-3.5 h-3.5"
                   aria-hidden="true"
